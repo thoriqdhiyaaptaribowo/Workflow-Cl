@@ -38,14 +38,9 @@ jobs:
           pip install -q dagshub 'mlflow>=2,<3'
 
       # Dagshub Auth
-      - name: Authenticate with DagsHub
-        env:
-          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_USER_TOKEN }}
-          MLFLOW_TRACKING_USERNAME: thoriqaptharibowo
-          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_ACCESS_TOKEN }} # or your password
-          MLFLOW_TRACKING_URI: https://dagshub.com/thoriqaptharibowo/Membangun_Model.mlflow
+      - name: start MLflow server
         run: |
-          dagshub login --token $DAGSHUB_USER_TOKEN
+          mlflow server
 
       # Run as a mlflow project
       - name: Run mlflow project

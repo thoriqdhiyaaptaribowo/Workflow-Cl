@@ -6,11 +6,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 from skopt import BayesSearchCV
-import dagshub
 
-dagshub.init(repo_owner='thoriqaptharibowo', repo_name='Membangun_Model', mlflow=True)
+mlflow.set_tracking_uri('http://127.0.0.1:5000')
 
-data = pd.read_csv('preprocessed_data.csv')
+data = pd.read_csv('MLproject/preprocessed_data.csv')
 x = data.drop("NObeyesdad", axis=1)
 y = data["NObeyesdad"]
 
