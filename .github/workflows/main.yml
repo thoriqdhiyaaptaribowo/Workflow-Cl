@@ -39,7 +39,7 @@ jobs:
       # Dagshub Auth
       - name: Verify DagsHub secrets present
         run: |
-          if [ -z "${DAGSHUB_TOKEN}" ]; then
+          if [ -z "${{ secrets.DAGSHUB_TOKEN }}" ]; then
             echo "DAGSHUB_TOKEN is empty"
             exit 1
           else
