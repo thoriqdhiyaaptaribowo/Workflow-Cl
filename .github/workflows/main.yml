@@ -35,6 +35,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt 
+          pip install -q dagshub 'mlflow>=2,<3'
 
       # Dagshub Auth
       - name: Authenticate with DagsHub
