@@ -62,7 +62,7 @@ with mlflow.start_run():
         try:
             import joblib
             joblib.dump(rf.best_estimator_, "random_forest_model.joblib")
-            mlflow.log_artifact("random_forest_model.joblib")
+            mlflow.log_artifact("model.joblib")
             print("Warning: mlflow.sklearn.log_model failed; model saved and logged as artifact instead. Error:", e)
         except Exception as e2:
             print("Failed to persist model with both mlflow.sklearn.log_model and fallback artifact method.")
