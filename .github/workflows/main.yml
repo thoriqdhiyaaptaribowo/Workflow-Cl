@@ -37,14 +37,14 @@ jobs:
           pip install -r requirements.txt 
 
       # Dagshub Auth
-      - name: Verify DagsHub secrets present
+      - name: Authenticate with DagsHub
+        env:
+          DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_USER_TOKEN }}
+          MLFLOW_TRACKING_USERNAME: your_dagshub_username
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_ACCESS_TOKEN }} # or your password
+          MLFLOW_TRACKING_URI: https://dagshub.com/your_username/your_repo_name.mlflow
         run: |
-          if [ -z "${{ secrets.DAGSHUB_TOKEN }}" ]; then
-            echo "DAGSHUB_TOKEN is empty"
-            exit 1
-          else
-            echo "DAGSHUB_TOKEN present (masked)"
-          fi
+          dagshub login --token $DAGSHUB_USER_TOKEN
 
       # Run as a mlflow project
       - name: Run mlflow project
