@@ -13,6 +13,8 @@ y = data["NObeyesdad"]
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=42, test_size=0.2)
 
+input_example = x_train[0:5]
+
 def evaluate_model(model, X_test, Y_test):
     Y_pred = model.predict(X_test)
     results = {
@@ -36,34 +38,17 @@ with mlflow.start_run():
     
     y_pred = rf.predict(x_test)
 
+    mlflow.sklearn.log_model(
+    sk_model=model,
+    artifact_path="model",
+    input_example=input_example
+    )
+    model.fit(x_train, y_train)
+
     results = evaluate_model(rf, x_test, y_test)
 
     for metric in ['Accuracy', 'Precision', 'Recall', 'F1-Score']:
         if metric in results:
             mlflow.log_metric(metric, float(results[metric]))
     
-    cm = results.get('Confusion Matrix')
-    if cm is not None:
-        np.savetxt("confusion_matrix.csv", cm, delimiter=",", fmt="%d")
-        mlflow.log_artifact("confusion_matrix.csv")
-
-    try:
-        best_params = getattr(rf, 'best_params_', None)
-        if best_params:
-            for k, v in best_params.items():
-                mlflow.log_param(k, v)
-    except Exception:
-        pass
-
-    try:
-        input_example = x_test.iloc[:5]
-        mlflow.sklearn.log_model(rf.best_estimator_, "random_forest_model", input_example=input_example)
-    except Exception as e:
-        try:
-            import joblib
-            joblib.dump(rf.best_estimator_, "random_forest_model.joblib")
-            mlflow.log_artifact("model.joblib")
-            print("Warning: mlflow.sklearn.log_model failed; model saved and logged as artifact instead. Error:", e)
-        except Exception as e2:
-            print("Failed to persist model with both mlflow.sklearn.log_model and fallback artifact method.")
-            raise
+    mlflow.sklearn.log_model(rf.best_estimator_, "random_forest_model")
