@@ -50,5 +50,3 @@ with mlflow.start_run():
     for metric in ['Accuracy', 'Precision', 'Recall', 'F1-Score']:
         if metric in results:
             mlflow.log_metric(metric, float(results[metric]))
-    
-    mlflow.sklearn.log_model(rf.best_estimator_, "random_forest_model")
