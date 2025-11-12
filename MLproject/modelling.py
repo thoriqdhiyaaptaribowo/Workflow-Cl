@@ -9,7 +9,7 @@ from skopt import BayesSearchCV
 
 mlflow.set_tracking_uri('http://127.0.0.1:5000')
 
-data = pd.read_csv('MLproject/preprocessed_data.csv')
+data = pd.read_csv('preprocessed_data.csv')
 x = data.drop("NObeyesdad", axis=1)
 y = data["NObeyesdad"]
 

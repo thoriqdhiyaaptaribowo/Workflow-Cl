@@ -37,11 +37,6 @@ jobs:
           pip install -r requirements.txt 
           pip install -q dagshub 'mlflow>=2,<3'
 
-      # Dagshub Auth
-      - name: start MLflow server
-        run: |
-          mlflow server
-
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
