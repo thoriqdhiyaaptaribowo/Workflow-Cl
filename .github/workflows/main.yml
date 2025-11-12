@@ -50,10 +50,10 @@ jobs:
 
       # Upload MLflow model artifact to GitHub
       - name: Upload MLflow model artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mlflow-model-${{ env.RUN_ID }}
-          path: mlruns/0/${{ env.RUN_ID }}/artifacts/model
+          path: mlruns/0/$RUN_ID/artifacts/model
           
       # Build Docker Model
       - name: Build Docker Model
@@ -75,4 +75,4 @@ jobs:
       # Push Docker image to Docker Hub
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/cobesityc:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/obesity:latest
