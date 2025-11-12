@@ -15,9 +15,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
-      DAGSHUB_API_TOKEN: ${{ secrets.DAGSHUB_API_TOKEN }}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
@@ -37,8 +34,18 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  
-          
+          pip install -r requirements.txt 
+
+      # Dagshub Auth
+      - name: Verify DagsHub secrets present
+        run: |
+          if [ -z "${DAGSHUB_TOKEN}" ]; then
+            echo "DAGSHUB_TOKEN is empty"
+            exit 1
+          else
+            echo "DAGSHUB_TOKEN present (masked)"
+          fi
+
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
