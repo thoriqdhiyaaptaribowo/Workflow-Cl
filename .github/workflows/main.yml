@@ -15,6 +15,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DAGSHUB_USERNAME: ${{ secrets.DAGSHUB_USERNAME }}
+      DAGSHUB_API_TOKEN: ${{ secrets.DAGSHUB_API_TOKEN }}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
