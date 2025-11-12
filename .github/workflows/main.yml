@@ -42,7 +42,7 @@ jobs:
           DAGSHUB_USER_TOKEN: ${{ secrets.DAGSHUB_USER_TOKEN }}
           MLFLOW_TRACKING_USERNAME: your_dagshub_username
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.DAGSHUB_ACCESS_TOKEN }} # or your password
-          MLFLOW_TRACKING_URI: https://dagshub.com/your_username/your_repo_name.mlflow
+          MLFLOW_TRACKING_URI: https://dagshub.com/thoriqaptharibowo/Membangun_Model.mlflow
         run: |
           dagshub login --token $DAGSHUB_USER_TOKEN
 
