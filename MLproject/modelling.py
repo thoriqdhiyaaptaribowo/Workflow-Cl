@@ -10,7 +10,7 @@ import dagshub
 
 dagshub.init(repo_owner='thoriqaptharibowo', repo_name='Membangun_Model', mlflow=True)
 
-data = pd.read_csv('preprocessed_data.csv')
+data = pd.read_csv('MLproject/preprocessed_data.csv')
 x = data.drop("NObeyesdad", axis=1)
 y = data["NObeyesdad"]
 
