@@ -72,6 +72,7 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
+          export MLFLOW_TRACKING_URI=http://localhost:5000
           mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "obesity"
 
       # Tag the Docker image
