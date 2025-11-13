@@ -59,7 +59,7 @@ jobs:
       # Build Docker Model
       - name: Build Docker Model
         run: |
-          mlflow models build-docker --model-uri "runs:/$RUN_ID/model" --name "obesity" 
+          mlflow models build-docker -m runs:/$RUN_ID/artifacts/model --name obesity 
 
       # Login to Docker Hub
       - name: Log in to Docker Hub
