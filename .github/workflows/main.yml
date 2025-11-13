@@ -37,6 +37,12 @@ jobs:
           pip install -r requirements.txt 
           pip install -q dagshub 'mlflow>=2,<3'
 
+      - name: Start local MLflow Tracking Server (as a background service)
+        run: |
+          mlflow ui --host 0.0.0.0 --port 5000 &
+          echo "MLFLOW_TRACKING_URI=http://localhost:5000" >> $GITHUB_ENV
+          sleep 5
+
       # Run as a mlflow project
       - name: Run mlflow project
         run: |
@@ -55,11 +61,6 @@ jobs:
         with:
           name: mlflow-model-${{ env.RUN_ID }}
           path: mlruns/0/$RUN_ID/artifacts/model
-          
-      # Build Docker Model
-      - name: Build Docker Model
-        run: |
-          mlflow models build-docker -m runs:/$RUN_ID/artifacts/model --name obesity 
 
       # Login to Docker Hub
       - name: Log in to Docker Hub
@@ -67,6 +68,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      # Build Docker Model
+      - name: Build Docker Model
+        run: |
+          mlflow models build-docker -m runs:/$RUN_ID/artifacts/model --name obesity 
 
       # Tag the Docker image
       - name: Tag Docker Image
